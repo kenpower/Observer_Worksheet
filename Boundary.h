@@ -3,7 +3,7 @@
 #include<algorithm>
 #include"pos.h"
 class Boundary {
-    float left, right, top, bottom;
+    float left=0, right=0, top=0, bottom=0;
     bool overlap(float aStart, float aEnd, float bStart, float bEnd) const {
         return std::max(aStart, bStart) <= std::min(aEnd, bEnd);
     }

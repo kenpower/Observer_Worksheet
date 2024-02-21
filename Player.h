@@ -22,7 +22,7 @@ public:
 
     Pos getPos() { return pos; }
 
-    float radius() { return (size.x) / 2.0; }
+    float radius() { return (size.x) / 2.0f; }
 
 
 };

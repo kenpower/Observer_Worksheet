@@ -28,7 +28,7 @@ public:
     }
 
     void draw(sf::RenderTarget& window, string name, Pos pos) {
-        sf::RectangleShape rectangle(sf::Vector2f(size.x, size.y));
+		sf::RectangleShape rectangle(sf::Vector2f((float)size.x, (float)size.y));
         rectangle.setFillColor(colorMap[name]);
         rectangle.setPosition(pos.x - size.x / 2, pos.y - size.y / 2);
         sf::Text text(name.c_str(), font, size.x / 2);

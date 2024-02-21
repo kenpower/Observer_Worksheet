@@ -29,6 +29,10 @@
 
 using namespace std;
 
+// Create a Observer Interface
+// Todo...
+
+
 class Inventory {
     std::map<Collectable, int> items;
 
@@ -133,14 +137,18 @@ public:
     }
 
     void checkCollisionWith(Boundary boundary,
-        Inventory& i,
-        SoundSystem& ss,
-        Achievements& a) {
+        Inventory& i, //after refactoring remove this line
+        SoundSystem& ss, //after refactoring remove this line
+        Achievements& a //after refactoring remove this line
+    ) {
         for (auto& collectable : items) {
             if (collectable.getBounds().intersects(boundary)) {
-                i.add(collectable);
-                ss.play(collectable.name);
-                a.collect(collectable);
+                i.add(collectable); //after refactoring remove this line
+                ss.play(collectable.name); //after refactoring remove this line
+                a.collect(collectable); //after refactoring remove this line
+
+                // notify all Observers
+                // Todo ....
 
                 collectable.used = true;
             }
@@ -188,6 +196,8 @@ class Game {
         pc.control(player);
 
         collectables.checkCollisionWith(player.getBounds(), inventory, soundSystem, achievments);
+        // After refactoring, replace above line with the line below:
+        // collectables.checkCollisionWith(player.getBounds());
     }
 
     void mainScreen() {
@@ -217,7 +227,7 @@ class Game {
 
         sf::Text gameOverText("Achievment Unlocked\n    Game Over!", font, 100);
   
-        gameOverText.setPosition(screenWidth/2, screenHeight/2);
+        gameOverText.setPosition(screenWidth/2.0f, screenHeight/20.f);
 
         sf::FloatRect textRect = gameOverText.getLocalBounds();
         gameOverText.setOrigin(textRect.left + textRect.width / 2.0f,
@@ -236,13 +246,16 @@ public:
         const int playerSize = 50;
         const int playerRadius = playerSize / 2;
 
-        Boundary playerBoundary(playerRadius, screenWidth - playerRadius, playerRadius, screenHeight - playerRadius);
+        Boundary playerBoundary(playerRadius, (float)screenWidth - playerRadius, playerRadius, (float)screenHeight - playerRadius);
         player = Player(playerBoundary, Pos{ (float)screenWidth / 2, (float)screenHeight / 2 }, Size{ playerSize , playerSize });
 
         string fontfile = "C:\\Windows\\Fonts\\Consola.ttf";
         if (!font.loadFromFile(fontfile.c_str())) {
             throw new exception((string("font file not found") + fontfile).c_str());
         }
+
+        //attach Observers to collecatables
+        //TODO ...
 
         collectables.setup(Size{screenWidth,screenHeight});
 
